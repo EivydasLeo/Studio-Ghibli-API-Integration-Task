@@ -5,8 +5,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>
-                <Link to="/">About</Link>
-                <Link to="/films">Films</Link>
+                <h3 className={styles.heading}>Navigation</h3>
+                <nav aria-label="Main navigation">
+                    <ul className={styles.navList}>
+                        <li className={styles.navItem}>
+                            <Link className={styles.navLink} to="/">
+                                About
+                            </Link>
+                        </li>
+                        <li className={styles.navItem}>
+                            <Link className={styles.navLink} to="/films">
+                                Films
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
             </aside>
 
             <main className={styles.content}>{children}</main>
