@@ -2,6 +2,9 @@
 
 Small React + TypeScript app that integrates the public Studio Ghibli API.
 
+https://studio-ghibli-api-integration-task.vercel.app/
+
+
 ## Features
 
 -   **Films list**: fetches and displays films.
