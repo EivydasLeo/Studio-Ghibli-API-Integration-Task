@@ -36,3 +36,9 @@
 .peopleSection {
     min-height: 120px;
 }
+
+.emptyPeople {
+    margin: 0;
+    padding: 12px 0;
+    text-align: center;
+}

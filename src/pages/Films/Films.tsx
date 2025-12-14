@@ -1,43 +1,83 @@
 import { useState } from "react";
-import { useGetFilmsQuery } from "../../api/ghibliApi";
+import { useGetFilmsQuery, useGetPeopleQuery } from "../../api/ghibliApi";
 import FilmCard, { FilmCardSkeleton } from "../../components/FilmCard/FilmCard";
+import PeopleTable, { PeopleTableSkeleton } from "../../components/PeopleTable/PeopleTable";
+import { filmsPageText } from "../../data/dummyData";
 import styles from "./Films.module.css";
-import type { Film } from "../../types/types";
+import { personAppearsInFilm } from "../../utils/personAppearsInFilm";
 
 export default function Films() {
-    const { data, error, isLoading } = useGetFilmsQuery("");
+    const { data: films, isLoading, error } = useGetFilmsQuery();
+
     const [selectedFilmId, setSelectedFilmId] = useState<string | null>(null);
 
-    if (error) return <p role="alert">There was an error loading films.</p>;
+    const {
+        data: allPeople,
+        isLoading: peopleLoading,
+        isFetching: peopleFetching,
+        error: peopleError,
+    } = useGetPeopleQuery(undefined, {
+        skip: !selectedFilmId,
+    });
 
-    const handleShowPeople = (filmId: string) => {
-        setSelectedFilmId(selectedFilmId === filmId ? null : filmId);
+    const selectedFilm = films?.find((film) => film.id === selectedFilmId);
+
+    const peopleForSelectedFilm =
+        selectedFilmId && allPeople
+            ? allPeople.filter((person) => personAppearsInFilm(person, selectedFilmId))
+            : [];
+
+    const isPeopleLoading = peopleLoading || peopleFetching;
+    const hasSelectedFilm = Boolean(selectedFilmId);
+    const hasPeople = peopleForSelectedFilm.length > 0;
+
+    if (error) {
+        return <p role="alert">{filmsPageText.filmsLoadError}</p>;
+    }
+
+    if (peopleError) {
+        return <p role="alert">{filmsPageText.peopleLoadError}</p>;
+    }
+
+    const handleTogglePeople = (filmId: string) => {
+        setSelectedFilmId((current) => (current === filmId ? null : filmId));
     };
-
-    const skeletonItems = Array.from({ length: 4 });
 
     return (
         <section className={styles.filmsContainer} aria-label="Studio Ghibli films">
             <h1 className={styles.heading}>Films</h1>
-            <ul className={styles.filmGrid} role="list" aria-label="Film list">
-                {isLoading || !data
-                    ? skeletonItems.map((_, index) => (
+
+            <ul className={styles.filmGrid} role="list">
+                {isLoading || !films
+                    ? Array.from({ length: 4 }).map((_, index) => (
                           <li key={index} className={styles.filmListItem}>
                               <FilmCardSkeleton />
                           </li>
                       ))
-                    : data.map(({ id, title, release_date, description }: Film) => (
-                          <li key={id} className={styles.filmListItem}>
+                    : films.map((film) => (
+                          <li key={film.id} className={styles.filmListItem}>
                               <FilmCard
-                                  id={id}
-                                  title={title}
-                                  release_date={release_date}
-                                  description={description}
-                                  onShowPeople={() => handleShowPeople(id)}
+                                  {...film}
+                                  onShowPeople={() => handleTogglePeople(film.id)}
                               />
                           </li>
                       ))}
             </ul>
+
+            {hasSelectedFilm && isPeopleLoading && <PeopleTableSkeleton />}
+
+            {hasSelectedFilm && !isPeopleLoading && !hasPeople && (
+                <p className={styles.emptyPeople} role="status" aria-live="polite">
+                    {filmsPageText.noPeopleFound}
+                </p>
+            )}
+
+            {hasSelectedFilm && !isPeopleLoading && hasPeople && (
+                <PeopleTable
+                    caption={`People in ${selectedFilm?.title} Film :`}
+                    people={peopleForSelectedFilm}
+                />
+            )}
         </section>
     );
 }
