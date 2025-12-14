@@ -1,0 +1,88 @@
+.tableWrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #666;
+    min-width: 520px;
+}
+
+.caption {
+    caption-side: top;
+    padding: 10px 12px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #666;
+    border-bottom: none;
+}
+
+.th,
+.td {
+    border: 1px solid #666;
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.th {
+    font-weight: 600;
+}
+
+.indexHeader {
+    width: 54px;
+}
+
+.indexCell {
+    text-align: right;
+    padding-right: 12px;
+    width: 54px;
+    white-space: nowrap;
+}
+
+.skeletonTable {
+    background: #f3f4f6;
+}
+
+.skeletonLine {
+    position: relative;
+    overflow: hidden;
+    background: #e5e7eb;
+    border-radius: 6px;
+    height: 12px;
+    margin: 0 auto;
+}
+
+.skeletonLine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.skeletonName {
+    width: 70%;
+}
+
+.skeletonAge {
+    width: 40%;
+}
+
+.skeletonGender {
+    width: 55%;
+}
+
+.skeletonEye {
+    width: 60%;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
