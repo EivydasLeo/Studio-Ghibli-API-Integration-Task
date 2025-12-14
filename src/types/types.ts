@@ -12,6 +12,8 @@ export interface Film {
 
 export interface FilmCardProps extends Film {
     onShowPeople: () => void;
+    isExpanded?: boolean;
+    controlsId?: string;
 }
 
 export interface People {

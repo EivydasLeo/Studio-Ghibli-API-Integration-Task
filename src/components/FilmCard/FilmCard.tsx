@@ -6,6 +6,8 @@ export default function FilmCard({
     release_date,
     description,
     onShowPeople,
+    isExpanded,
+    controlsId,
 }: FilmCardProps) {
     const titleId = `film-title-${title}`;
 
@@ -21,6 +23,8 @@ export default function FilmCard({
                 className={styles.showPeopleButton}
                 onClick={onShowPeople}
                 aria-label={`Show people for ${title}`}
+                aria-expanded={isExpanded}
+                aria-controls={controlsId}
             >
                 Show people
             </button>

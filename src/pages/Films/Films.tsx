@@ -31,6 +31,8 @@ export default function Films() {
     const hasSelectedFilm = Boolean(selectedFilmId);
     const hasPeople = peopleForSelectedFilm.length > 0;
 
+    const peopleSectionId = "people-section";
+
     if (error) {
         return <p role="alert">{filmsPageText.filmsLoadError}</p>;
     }
@@ -59,25 +61,33 @@ export default function Films() {
                               <FilmCard
                                   {...film}
                                   onShowPeople={() => handleTogglePeople(film.id)}
+                                  isExpanded={selectedFilmId === film.id}
+                                  controlsId={peopleSectionId}
                               />
                           </li>
                       ))}
             </ul>
 
-            {hasSelectedFilm && isPeopleLoading && <PeopleTableSkeleton />}
+            <div
+                id={peopleSectionId}
+                aria-live="polite"
+                aria-busy={hasSelectedFilm && isPeopleLoading}
+            >
+                {hasSelectedFilm && isPeopleLoading && <PeopleTableSkeleton />}
 
-            {hasSelectedFilm && !isPeopleLoading && !hasPeople && (
-                <p className={styles.emptyPeople} role="status" aria-live="polite">
-                    {filmsPageText.noPeopleFound}
-                </p>
-            )}
+                {hasSelectedFilm && !isPeopleLoading && !hasPeople && (
+                    <p className={styles.emptyPeople} role="status">
+                        {filmsPageText.noPeopleFound}
+                    </p>
+                )}
 
-            {hasSelectedFilm && !isPeopleLoading && hasPeople && (
-                <PeopleTable
-                    caption={`People in ${selectedFilm?.title} Film :`}
-                    people={peopleForSelectedFilm}
-                />
-            )}
+                {hasSelectedFilm && !isPeopleLoading && hasPeople && (
+                    <PeopleTable
+                        caption={`People in ${selectedFilm?.title} Film`}
+                        people={peopleForSelectedFilm}
+                    />
+                )}
+            </div>
         </section>
     );
 }
