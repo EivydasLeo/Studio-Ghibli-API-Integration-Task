@@ -1,0 +1,44 @@
+.filmsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    overflow-x: hidden;
+}
+
+.heading {
+    margin: 0;
+    font-size: 24px;
+}
+
+.filmGrid {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+    list-style: none;
+    margin: 0;
+    overflow-x: auto;
+}
+
+.filmGrid > :first-child {
+    margin-left: 10px;
+}
+
+.filmGrid:focus-visible {
+    outline: 2px solid #0052a3;
+    outline-offset: 4px;
+}
+
+.filmListItem {
+    display: block;
+}
+
+.peopleSection {
+    min-height: 120px;
+}
+
+.emptyPeople {
+    margin: 0;
+    padding: 12px 0;
+    text-align: center;
+}

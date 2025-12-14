@@ -1,10 +1,13 @@
-import { useState } from "react";
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import AppRouter from "./router/AppRouter";
 
-function App() {
-    const [count, setCount] = useState(0);
-
-    return <div>hello world</div>;
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Layout>
+                <AppRouter />
+            </Layout>
+        </BrowserRouter>
+    );
 }
-
-export default App;

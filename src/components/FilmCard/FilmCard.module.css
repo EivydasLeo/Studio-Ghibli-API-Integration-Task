@@ -1,0 +1,125 @@
+.filmCard {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 240px;
+    max-width: 260px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &:focus-within {
+        outline: 2px solid #0052a3;
+        outline-offset: 4px;
+    }
+}
+
+.title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.releaseDate {
+    margin: 8px 0 16px 0;
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.description {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #444;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    line-clamp: 4;
+    white-space: normal;
+}
+
+.showPeopleButton {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    text-decoration: underline;
+    width: fit-content;
+    align-self: center;
+}
+
+.showPeopleButton:hover {
+    color: #0052a3;
+}
+
+.showPeopleButton:focus-visible {
+    outline: 2px solid #0052a3;
+    outline-offset: 2px;
+}
+
+.skeletonCard {
+    background-color: #f3f4f6;
+    border-color: #e0e0e0;
+    box-shadow: none;
+}
+
+.skeletonLine {
+    position: relative;
+    overflow: hidden;
+    background: #e5e7eb;
+    border-radius: 6px;
+}
+
+.skeletonLine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1.2s ease-in-out infinite;
+}
+
+.skeletonTitle {
+    height: 18px;
+    width: 70%;
+}
+
+.skeletonMeta {
+    height: 14px;
+    width: 55%;
+    margin-bottom: 6px;
+}
+
+.skeletonText {
+    height: 12px;
+    width: 100%;
+}
+
+.skeletonTextWide {
+    height: 12px;
+    width: 85%;
+}
+
+.skeletonButton {
+    height: 14px;
+    width: 90px;
+    margin-top: auto;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
